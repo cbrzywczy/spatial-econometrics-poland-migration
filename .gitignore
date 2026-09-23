@@ -1,0 +1,11 @@
+data/
+wydruki/
+wykresy_robocze/
+media/
+tabele/
+stargazer/
+Overleaf/
+Rlib/
+mice/
+__pycache__/
+.Rhistory
