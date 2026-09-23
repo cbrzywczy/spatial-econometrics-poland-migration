@@ -2,7 +2,7 @@
 
 <img src="charts/lisa_klastry_saldo_migracji.png" alt="Mapa klastrów LISA dla salda migracji" align="right" width="340">
 
-> ### Dlaczego jedne gminy zyskują mieszkańców, a inne ich tracą?
+Dlaczego jedne gminy zyskują mieszkańców, a inne ich tracą?
 
 Moja praca licencjacka (Informatyka i Ekonometria, WNE UW, 2026) sprawdza, jak saldo migracji wewnętrznych zależy od cech ekonomicznych i położenia gminy oraz od sytuacji w gminach sąsiednich. Mapa obok pokazuje skupiska gmin o wysokim (czerwone) i niskim (niebieskie) saldzie migracji.
 
@@ -28,13 +28,22 @@ Moja praca licencjacka (Informatyka i Ekonometria, WNE UW, 2026) sprawdza, jak s
 
 ## Wykresy
 
+Pojęcia użyte w opisach wyjaśnia [DEFINICJE.md](DEFINICJE.md).
+
 | Lokalne R² modelu GWR | Wpływ wynagrodzeń według GWR |
 |---|---|
 | ![Lokalne R² modelu GWR](charts/gwr_lokalne_r2.png) | ![Lokalny współczynnik GWR dla wynagrodzeń](charts/gwr_wspolczynnik_wynagrodzenia.png) |
 | Jak dobrze model wyjaśnia migracje w każdej gminie. Im ciemniej, tym lepiej. Najlepiej wokół Warszawy, Poznania i Wrocławia. | Siła związku wynagrodzeń z saldem migracji w każdej gminie. Najsilniejszy na Pomorzu Zachodnim. Na szaro gminy, w których związek jest nieistotny. |
-| **Wykres rozrzutu Morana** | **Zmienne modelu na mapie** |
-| ![Wykres rozrzutu Morana](charts/moran_wykres_rozrzutu.png) | ![Mapy zmiennych modelu](charts/mapy_zmiennych.png) |
-| Każdy punkt to gmina: jej saldo migracji (oś X) i średnie saldo sąsiadów (oś Y). Dodatnie nachylenie oznacza, że gminy o podobnym saldzie leżą obok siebie. | Rozkład wszystkich zmiennych modelu. Czerwony oznacza wartości wysokie, niebieski niskie. |
+
+| Zmienne modelu na mapie |
+|:-:|
+| ![Mapy zmiennych modelu](charts/mapy_zmiennych.png) |
+| Rozkład wszystkich zmiennych modelu. Czerwony oznacza wartości wysokie, niebieski niskie. Saldo migracji jest najwyższe wokół największych miast. |
+
+| Wykres rozrzutu Morana |
+|:-:|
+| <img src="charts/moran_wykres_rozrzutu.png" alt="Wykres rozrzutu Morana" width="560"> |
+| Każdy punkt to gmina: jej saldo migracji (oś X) i średnie saldo sąsiadów (oś Y).<br>Dodatnie nachylenie oznacza, że gminy o podobnym saldzie leżą obok siebie. |
 
 ## Kod
 
@@ -54,6 +63,10 @@ Dane nie są częścią repozytorium. Skrypty odczytują pliki z katalogu `data/
 - [Bank Danych Lokalnych GUS](https://bdl.stat.gov.pl/bdl/start), 2024: saldo migracji na 1000 osób, bezrobocie, mediany wynagrodzeń, populacja, przystanki, przychodnie, mieszkania oddane, powierzchnia mieszkań na osobę
 - [Ministerstwo Finansów](https://www.gov.pl/web/finanse/wskazniki-dochodow-podatkowych-gmin-powiatow-i-wojewodztw-na-2024-r), 2024: wskaźnik dochodów podatkowych gmin G
 - [Państwowy Rejestr Granic, GUGiK](https://dane.gov.pl/pl/dataset/726,panstwowy-rejestr-granic-i-powierzchni-jednostek-podziaow-terytorialnych-kraju): granice gmin
+
+## Definicje
+
+Wszystkie pojęcia i metody z pracy, od salda migracji po test F(3), są wyjaśnione w [DEFINICJE.md](DEFINICJE.md).
 
 ## Licencja
 
