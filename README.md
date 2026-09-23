@@ -2,18 +2,18 @@
 
 <img src="charts/lisa_klastry_saldo_migracji.png" alt="Mapa klastrów LISA dla salda migracji" align="right" width="340">
 
-Dlaczego jedne gminy zyskują mieszkańców, a inne ich tracą? Praca licencjacka bada, jak saldo migracji wewnętrznych zależy od cech ekonomicznych i położenia gminy oraz od sytuacji w gminach sąsiednich.
+> ### Dlaczego jedne gminy zyskują mieszkańców, a inne ich tracą?
 
-**Dane:** 2477 gmin, rok 2024: saldo migracji, wynagrodzenia, bezrobocie, mieszkania, przychodnie, dochody podatkowe, odległość od dużego miasta
+Moja praca licencjacka (Informatyka i Ekonometria, WNE UW, 2026) sprawdza, jak saldo migracji wewnętrznych zależy od cech ekonomicznych i położenia gminy oraz od sytuacji w gminach sąsiednich. Mapa obok pokazuje skupiska gmin o wysokim (czerwone) i niskim (niebieskie) saldzie migracji.
 
-**Modele:** MNK / WMNK z imputacją MICE · SAR, SEM, SLX, SDM, SDEM, SAC, GNS · GWR i mixed GWR
+**Dane:** 2477 gmin w 2024 roku, w tym saldo migracji, wynagrodzenia, bezrobocie, mieszkania, przychodnie, dochody podatkowe i odległość od dużego miasta
 
-**Testy:** Chow, RESET · I Morana, C Geary’ego, join-count, LISA · LM · F(3) dla GWR
+**Modele:** MNK i WMNK z imputacją MICE, modele przestrzenne SAR, SEM, SLX, SDM, SDEM, SAC i GNS, regresja geograficznie ważona GWR
 
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/r/r-original.svg" width="16" alt="R"> &nbsp;`spdep` · `spatialreg` · `GWmodel` · `mice` · `sf`<br>
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/python/python-original.svg" width="16" alt="Python"> &nbsp;`pandas` · `geopandas` · `statsmodels` · `scipy`
+**Testy:** Chowa, RESET, I Morana, C Geary’ego, join-count, LISA, testy LM, F(3) dla GWR
 
-<sub>Praca licencjacka, Informatyka i Ekonometria, WNE UW, 2026. Na mapie: klastry LISA salda migracji.</sub>
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/r/r-original.svg" width="16" alt="R">&nbsp; `spdep` `spatialreg` `GWmodel` `mice` `sf`<br>
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/python/python-original.svg" width="16" alt="Python">&nbsp; `pandas` `geopandas` `statsmodels` `scipy`
 
 <br clear="right">
 
@@ -28,22 +28,24 @@ Dlaczego jedne gminy zyskują mieszkańców, a inne ich tracą? Praca licencjack
 
 ## Wykresy
 
-| Lokalne R² modelu GWR | Lokalny współczynnik GWR dla log wynagrodzeń |
+| Lokalne R² modelu GWR | Wpływ wynagrodzeń według GWR |
 |---|---|
 | ![Lokalne R² modelu GWR](charts/gwr_lokalne_r2.png) | ![Lokalny współczynnik GWR dla wynagrodzeń](charts/gwr_wspolczynnik_wynagrodzenia.png) |
-| **Wykres rozrzutu I Morana dla salda migracji** | **Mapy zmiennych modelu** |
+| Jak dobrze model wyjaśnia migracje w każdej gminie. Im ciemniej, tym lepiej. Najlepiej wokół Warszawy, Poznania i Wrocławia. | Siła związku wynagrodzeń z saldem migracji w każdej gminie. Najsilniejszy na Pomorzu Zachodnim. Na szaro gminy, w których związek jest nieistotny. |
+| **Wykres rozrzutu Morana** | **Zmienne modelu na mapie** |
 | ![Wykres rozrzutu Morana](charts/moran_wykres_rozrzutu.png) | ![Mapy zmiennych modelu](charts/mapy_zmiennych.png) |
+| Każdy punkt to gmina: jej saldo migracji (oś X) i średnie saldo sąsiadów (oś Y). Dodatnie nachylenie oznacza, że gminy o podobnym saldzie leżą obok siebie. | Rozkład wszystkich zmiennych modelu. Czerwony oznacza wartości wysokie, niebieski niskie. |
 
 ## Kod
 
-| Plik | Zawartość |
-|---|---|
-| <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/r/r-original.svg" width="14"> [`R/01_mnk_wmnk_mice.R`](R/01_mnk_wmnk_mice.R) | statystyki opisowe, MNK / WMNK, diagnostyka, test Chowa, imputacja MICE, reguły Rubina |
-| <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/r/r-original.svg" width="14"> [`R/02_modele_przestrzenne.R`](R/02_modele_przestrzenne.R) | macierz wag, statystyki autokorelacji, testy LM, estymacja i wybór modelu przestrzennego, efekty bezpośrednie i pośrednie |
-| <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/r/r-original.svg" width="14"> [`R/03_gwr.R`](R/03_gwr.R) | wybór pasma, GWR, test F(3), lokalna współliniowość, mapy współczynników |
-| <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/r/r-original.svg" width="14"> [`R/04_gwr_mieszany.R`](R/04_gwr_mieszany.R) | mixed GWR: parametry globalne i lokalne |
-| <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/python/python-original.svg" width="14"> [`python/mnk_testy_zmiennych.py`](python/mnk_testy_zmiennych.py) | przygotowanie i transformacje zmiennych, eliminacja zmiennych, testy MNK |
-| <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/python/python-original.svg" width="14"> [`python/odleglosci_km.py`](python/odleglosci_km.py) | centroidy gmin (EPSG:2180), odległość od najbliższego dużego miasta |
+| | Plik | Zawartość |
+|:-:|---|---|
+| <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/r/r-original.svg" width="18"> | [`01_mnk_wmnk_mice.R`](R/01_mnk_wmnk_mice.R) | statystyki opisowe, MNK i WMNK, diagnostyka, test Chowa, imputacja MICE, reguły Rubina |
+| <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/r/r-original.svg" width="18"> | [`02_modele_przestrzenne.R`](R/02_modele_przestrzenne.R) | macierz wag, statystyki autokorelacji, testy LM, wybór modelu przestrzennego, efekty bezpośrednie i pośrednie |
+| <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/r/r-original.svg" width="18"> | [`03_gwr.R`](R/03_gwr.R) | wybór pasma, GWR, test F(3), lokalna współliniowość, mapy współczynników |
+| <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/r/r-original.svg" width="18"> | [`04_gwr_mieszany.R`](R/04_gwr_mieszany.R) | mixed GWR z parametrami globalnymi i lokalnymi |
+| <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/python/python-original.svg" width="18"> | [`mnk_testy_zmiennych.py`](python/mnk_testy_zmiennych.py) | przygotowanie i transformacje zmiennych, eliminacja zmiennych, testy MNK |
+| <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/python/python-original.svg" width="18"> | [`odleglosci_km.py`](python/odleglosci_km.py) | centroidy gmin i odległość od najbliższego dużego miasta |
 
 ## Dane
 
