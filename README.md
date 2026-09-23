@@ -1,51 +1,55 @@
-# Analiza przestrzenna migracji wewnętrznych na poziomie gmin w Polsce
+# Ekonometria przestrzenna: migracje wewnętrzne w gminach Polski
 
-Kod i wybrane wykresy z mojej pracy licencjackiej (Informatyka i Ekonometria, WNE UW, 2026). Badam przestrzenne zależności między saldem migracji wewnętrznych a cechami ekonomiczno-geograficznymi gmin, na danych za 2024 rok (n = 2477 gmin).
+![Mapa klastrów LISA dla salda migracji](charts/lisa_klastry_saldo_migracji.png)
 
-**Metody:** MNK/WMNK z imputacją MICE (reguły Rubina) · test Chowa · I Morana, C Geary’ego, LISA · modele przestrzenne SAR / SEM / SLX / SDM / SDEM / SAC / GNS · testy LM · regresja geograficznie ważona (GWR, mixed GWR, test F(3))
+Dlaczego jedne gminy zyskują mieszkańców, a inne ich tracą? Praca licencjacka bada, jak saldo migracji wewnętrznych zależy od cech ekonomicznych i położenia gminy oraz od sytuacji w gminach sąsiednich.
 
-**Narzędzia:** R (`spdep`, `spatialreg`, `GWmodel`, `mice`, `sf`) · Python (`pandas`, `geopandas`, `statsmodels`, `scipy`)
+| | |
+|---|---|
+| **Dane** | 2477 gmin, rok 2024: saldo migracji, wynagrodzenia, bezrobocie, mieszkania, przychodnie, dochody podatkowe, odległość od dużego miasta |
+| **Modele** | MNK / WMNK z imputacją MICE (reguły Rubina) · SAR, SEM, SLX, SDM, SDEM, SAC, GNS · GWR i mixed GWR |
+| **Testy** | test Chowa, RESET · I Morana, C Geary’ego, join-count, LISA · testy LM · test F(3) dla GWR |
+| **Narzędzia** | R: `spdep`, `spatialreg`, `GWmodel`, `mice`, `sf` · Python: `pandas`, `geopandas`, `statsmodels`, `scipy` |
+| **Kontekst** | praca licencjacka, Informatyka i Ekonometria, WNE UW, 2026 |
 
-![Mapa klastrów LISA](wykresy/lisa_klastry_saldo_migracji.png)
+## Najważniejsze wyniki
 
-## Główne wnioski
-
-- Specyfikacja modelu WMNK wyjaśnia **43,4%** zmienności wskaźnika salda migracji. Czynnikiem najsilniej przyciągającym okazało się **wynagrodzenie**, najmocniej wypychającymi **bezrobocie** oraz miejski charakter gminy.
-- Związek odległości od dużego miasta z saldem migracji jest w większości **ujemny i nieliniowy**: siła przyciągania największych miast do gmin sąsiednich słabnie wraz z odległością (efekt krańcowy ujemny na przedziale 0–107 km dla 98% obserwacji).
-- Reszty MNK wykazują dodatnią, istotną **autokorelację przestrzenną**. Pominięcie aspektu przestrzennego nie daje pełnego obrazu, bo sąsiadujące gminy wchodzą ze sobą w interakcję i tworzą lokalne skupienia.
-- Pierścienie podmiejskie największych miast tworzą klastry **High-High**, często z wyłączeniem rdzenia aglomeracji (Low-High). Gminy peryferyjne na wschodzie kraju formują klastry **Low-Low**.
-- Wybrany model **SDEM** usuwa autokorelację reszt (I = −0,004; p = 0,617) i potwierdza istotne **efekty spillover**. Interakcje między gminami mają zazwyczaj charakter konkurencyjny: czynniki przyciągające w sąsiedztwie są ujemnie powiązane z saldem danej gminy.
-- **GWR** ma lepsze dopasowanie niż benchmark MNK, a wszystkie parametry wykazują istotną heterogeniczność przestrzenną (test F(3)). Najwyższe lokalne R² model osiąga dla aglomeracji Warszawy, Poznania, Wrocławia, Łodzi i Krakowa.
+- Model WMNK wyjaśnia **43,4%** zmienności salda migracji. Najsilniej przyciąga **wynagrodzenie**. Najsilniej wypychają **bezrobocie** i miejski charakter gminy.
+- Saldo migracji maleje nieliniowo wraz z odległością od dużego miasta. Efekt krańcowy jest ujemny w przedziale 0–107 km dla 98% gmin.
+- Reszty MNK mają dodatnią, istotną autokorelację przestrzenną. Model bez części przestrzennej pomija interakcje między sąsiednimi gminami.
+- Pierścienie podmiejskie największych miast tworzą klastry **High-High**, zwykle bez samego rdzenia aglomeracji (Low-High). Gminy peryferyjne na wschodzie tworzą klastry **Low-Low**.
+- Model **SDEM** usuwa autokorelację reszt (I = −0,004; p = 0,617) i wykazuje istotne **efekty spillover**. Czynniki przyciągające w gminach sąsiednich są ujemnie powiązane z saldem danej gminy: gminy konkurują o migrantów.
+- **GWR** dopasowuje się lepiej niż MNK. Wszystkie parametry zmieniają się istotnie w przestrzeni (test F(3)). Najwyższe lokalne R² model osiąga dla aglomeracji Warszawy, Poznania, Wrocławia, Łodzi i Krakowa.
 
 ## Wykresy
 
 | | |
 |---|---|
-| ![Lokalne R² modelu GWR](wykresy/gwr_lokalne_r2.png) | ![Lokalny współczynnik GWR: wynagrodzenia](wykresy/gwr_wspolczynnik_wynagrodzenia.png) |
+| ![Lokalne R² modelu GWR](charts/gwr_lokalne_r2.png) | ![Lokalny współczynnik GWR dla wynagrodzeń](charts/gwr_wspolczynnik_wynagrodzenia.png) |
 | Lokalne R² modelu GWR | Lokalny współczynnik GWR dla log wynagrodzeń |
-| ![Wykres rozrzutu Morana](wykresy/moran_wykres_rozrzutu.png) | ![Mapy zmiennych](wykresy/mapy_zmiennych.png) |
+| ![Wykres rozrzutu Morana](charts/moran_wykres_rozrzutu.png) | ![Mapy zmiennych modelu](charts/mapy_zmiennych.png) |
 | Wykres rozrzutu I Morana dla salda migracji | Mapy zmiennych modelu |
 
 ## Kod
 
-| Plik | Co robi |
+| Plik | Zawartość |
 |---|---|
-| [`R/01_mnk_wmnk_mice.R`](R/01_mnk_wmnk_mice.R) | statystyki opisowe, MNK/WMNK, diagnostyka, test Chowa, imputacja MICE i łączenie wyników regułami Rubina |
-| [`R/02_modele_przestrzenne.R`](R/02_modele_przestrzenne.R) | macierz wag, I Morana / C Geary’ego / join-count / LISA, testy LM, estymacja i wybór modelu przestrzennego, efekty bezpośrednie i pośrednie |
+| [`R/01_mnk_wmnk_mice.R`](R/01_mnk_wmnk_mice.R) | statystyki opisowe, MNK / WMNK, diagnostyka, test Chowa, imputacja MICE, reguły Rubina |
+| [`R/02_modele_przestrzenne.R`](R/02_modele_przestrzenne.R) | macierz wag, statystyki autokorelacji, testy LM, estymacja i wybór modelu przestrzennego, efekty bezpośrednie i pośrednie |
 | [`R/03_gwr.R`](R/03_gwr.R) | wybór pasma, GWR, test F(3), lokalna współliniowość, mapy współczynników |
-| [`R/04_gwr_mieszany.R`](R/04_gwr_mieszany.R) | mixed GWR (parametry globalne i lokalne) |
-| [`python/mnk_testy_zmiennych.py`](python/mnk_testy_zmiennych.py) | przygotowanie zmiennych, transformacje, eliminacja zmiennych i testy MNK |
-| [`python/odleglosci_km.py`](python/odleglosci_km.py) | centroidy gmin (EPSG:2180) i odległość od najbliższego dużego miasta |
+| [`R/04_gwr_mieszany.R`](R/04_gwr_mieszany.R) | mixed GWR: parametry globalne i lokalne |
+| [`python/mnk_testy_zmiennych.py`](python/mnk_testy_zmiennych.py) | przygotowanie i transformacje zmiennych, eliminacja zmiennych, testy MNK |
+| [`python/odleglosci_km.py`](python/odleglosci_km.py) | centroidy gmin (EPSG:2180), odległość od najbliższego dużego miasta |
 
 ## Dane
 
-Danych nie ma w repozytorium. Wszystkie pochodzą z publicznych źródeł:
+Dane nie są częścią repozytorium. Skrypty odczytują pliki z katalogu `data/`.
 
-- Bank Danych Lokalnych GUS (2024): saldo migracji na 1000 osób, bezrobocie, mediany wynagrodzeń, populacja, przystanki, przychodnie, mieszkania oddane do użytkowania, powierzchnia mieszkań per capita
-- Ministerstwo Finansów: wskaźnik dochodów podatkowych gmin G (2024)
-- Państwowy Rejestr Granic (GUGiK): granice gmin
-
-Skrypty oczekują plików w katalogu `data/` w głównym folderze repozytorium.
+| Zbiór | Źródło |
+|---|---|
+| saldo migracji na 1000 osób, bezrobocie, mediany wynagrodzeń, populacja, przystanki, przychodnie, mieszkania oddane, powierzchnia mieszkań na osobę | [Bank Danych Lokalnych GUS](https://bdl.stat.gov.pl/bdl/start), 2024 |
+| wskaźnik dochodów podatkowych gmin G | [Ministerstwo Finansów](https://www.gov.pl/web/finanse/wskazniki-dochodow-podatkowych-gmin-powiatow-i-wojewodztw-na-2024-r), 2024 |
+| granice gmin | [Państwowy Rejestr Granic, GUGiK](https://dane.gov.pl/pl/dataset/726,panstwowy-rejestr-granic-i-powierzchni-jednostek-podziaow-terytorialnych-kraju) |
 
 ## Licencja
 
