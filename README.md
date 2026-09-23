@@ -1,16 +1,21 @@
 # Ekonometria przestrzenna: migracje wewnętrzne w gminach Polski
 
-![Mapa klastrów LISA dla salda migracji](charts/lisa_klastry_saldo_migracji.png)
+<img src="charts/lisa_klastry_saldo_migracji.png" alt="Mapa klastrów LISA dla salda migracji" align="right" width="340">
 
 Dlaczego jedne gminy zyskują mieszkańców, a inne ich tracą? Praca licencjacka bada, jak saldo migracji wewnętrznych zależy od cech ekonomicznych i położenia gminy oraz od sytuacji w gminach sąsiednich.
 
-| | |
-|---|---|
-| **Dane** | 2477 gmin, rok 2024: saldo migracji, wynagrodzenia, bezrobocie, mieszkania, przychodnie, dochody podatkowe, odległość od dużego miasta |
-| **Modele** | MNK / WMNK z imputacją MICE (reguły Rubina) · SAR, SEM, SLX, SDM, SDEM, SAC, GNS · GWR i mixed GWR |
-| **Testy** | test Chowa, RESET · I Morana, C Geary’ego, join-count, LISA · testy LM · test F(3) dla GWR |
-| **Narzędzia** | R: `spdep`, `spatialreg`, `GWmodel`, `mice`, `sf` · Python: `pandas`, `geopandas`, `statsmodels`, `scipy` |
-| **Kontekst** | praca licencjacka, Informatyka i Ekonometria, WNE UW, 2026 |
+**Dane:** 2477 gmin, rok 2024: saldo migracji, wynagrodzenia, bezrobocie, mieszkania, przychodnie, dochody podatkowe, odległość od dużego miasta
+
+**Modele:** MNK / WMNK z imputacją MICE · SAR, SEM, SLX, SDM, SDEM, SAC, GNS · GWR i mixed GWR
+
+**Testy:** Chow, RESET · I Morana, C Geary’ego, join-count, LISA · LM · F(3) dla GWR
+
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/r/r-original.svg" width="16" alt="R"> &nbsp;`spdep` · `spatialreg` · `GWmodel` · `mice` · `sf`<br>
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/python/python-original.svg" width="16" alt="Python"> &nbsp;`pandas` · `geopandas` · `statsmodels` · `scipy`
+
+<sub>Praca licencjacka, Informatyka i Ekonometria, WNE UW, 2026. Na mapie: klastry LISA salda migracji.</sub>
+
+<br clear="right">
 
 ## Najważniejsze wyniki
 
@@ -23,33 +28,30 @@ Dlaczego jedne gminy zyskują mieszkańców, a inne ich tracą? Praca licencjack
 
 ## Wykresy
 
-| | |
+| Lokalne R² modelu GWR | Lokalny współczynnik GWR dla log wynagrodzeń |
 |---|---|
 | ![Lokalne R² modelu GWR](charts/gwr_lokalne_r2.png) | ![Lokalny współczynnik GWR dla wynagrodzeń](charts/gwr_wspolczynnik_wynagrodzenia.png) |
-| Lokalne R² modelu GWR | Lokalny współczynnik GWR dla log wynagrodzeń |
+| **Wykres rozrzutu I Morana dla salda migracji** | **Mapy zmiennych modelu** |
 | ![Wykres rozrzutu Morana](charts/moran_wykres_rozrzutu.png) | ![Mapy zmiennych modelu](charts/mapy_zmiennych.png) |
-| Wykres rozrzutu I Morana dla salda migracji | Mapy zmiennych modelu |
 
 ## Kod
 
 | Plik | Zawartość |
 |---|---|
-| [`R/01_mnk_wmnk_mice.R`](R/01_mnk_wmnk_mice.R) | statystyki opisowe, MNK / WMNK, diagnostyka, test Chowa, imputacja MICE, reguły Rubina |
-| [`R/02_modele_przestrzenne.R`](R/02_modele_przestrzenne.R) | macierz wag, statystyki autokorelacji, testy LM, estymacja i wybór modelu przestrzennego, efekty bezpośrednie i pośrednie |
-| [`R/03_gwr.R`](R/03_gwr.R) | wybór pasma, GWR, test F(3), lokalna współliniowość, mapy współczynników |
-| [`R/04_gwr_mieszany.R`](R/04_gwr_mieszany.R) | mixed GWR: parametry globalne i lokalne |
-| [`python/mnk_testy_zmiennych.py`](python/mnk_testy_zmiennych.py) | przygotowanie i transformacje zmiennych, eliminacja zmiennych, testy MNK |
-| [`python/odleglosci_km.py`](python/odleglosci_km.py) | centroidy gmin (EPSG:2180), odległość od najbliższego dużego miasta |
+| <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/r/r-original.svg" width="14"> [`R/01_mnk_wmnk_mice.R`](R/01_mnk_wmnk_mice.R) | statystyki opisowe, MNK / WMNK, diagnostyka, test Chowa, imputacja MICE, reguły Rubina |
+| <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/r/r-original.svg" width="14"> [`R/02_modele_przestrzenne.R`](R/02_modele_przestrzenne.R) | macierz wag, statystyki autokorelacji, testy LM, estymacja i wybór modelu przestrzennego, efekty bezpośrednie i pośrednie |
+| <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/r/r-original.svg" width="14"> [`R/03_gwr.R`](R/03_gwr.R) | wybór pasma, GWR, test F(3), lokalna współliniowość, mapy współczynników |
+| <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/r/r-original.svg" width="14"> [`R/04_gwr_mieszany.R`](R/04_gwr_mieszany.R) | mixed GWR: parametry globalne i lokalne |
+| <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/python/python-original.svg" width="14"> [`python/mnk_testy_zmiennych.py`](python/mnk_testy_zmiennych.py) | przygotowanie i transformacje zmiennych, eliminacja zmiennych, testy MNK |
+| <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/python/python-original.svg" width="14"> [`python/odleglosci_km.py`](python/odleglosci_km.py) | centroidy gmin (EPSG:2180), odległość od najbliższego dużego miasta |
 
 ## Dane
 
 Dane nie są częścią repozytorium. Skrypty odczytują pliki z katalogu `data/`.
 
-| Zbiór | Źródło |
-|---|---|
-| saldo migracji na 1000 osób, bezrobocie, mediany wynagrodzeń, populacja, przystanki, przychodnie, mieszkania oddane, powierzchnia mieszkań na osobę | [Bank Danych Lokalnych GUS](https://bdl.stat.gov.pl/bdl/start), 2024 |
-| wskaźnik dochodów podatkowych gmin G | [Ministerstwo Finansów](https://www.gov.pl/web/finanse/wskazniki-dochodow-podatkowych-gmin-powiatow-i-wojewodztw-na-2024-r), 2024 |
-| granice gmin | [Państwowy Rejestr Granic, GUGiK](https://dane.gov.pl/pl/dataset/726,panstwowy-rejestr-granic-i-powierzchni-jednostek-podziaow-terytorialnych-kraju) |
+- [Bank Danych Lokalnych GUS](https://bdl.stat.gov.pl/bdl/start), 2024: saldo migracji na 1000 osób, bezrobocie, mediany wynagrodzeń, populacja, przystanki, przychodnie, mieszkania oddane, powierzchnia mieszkań na osobę
+- [Ministerstwo Finansów](https://www.gov.pl/web/finanse/wskazniki-dochodow-podatkowych-gmin-powiatow-i-wojewodztw-na-2024-r), 2024: wskaźnik dochodów podatkowych gmin G
+- [Państwowy Rejestr Granic, GUGiK](https://dane.gov.pl/pl/dataset/726,panstwowy-rejestr-granic-i-powierzchni-jednostek-podziaow-terytorialnych-kraju): granice gmin
 
 ## Licencja
 
