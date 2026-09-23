@@ -1,0 +1,27 @@
+Type: Project
+Package: spatialEconometricsPolandMigration
+Title: Ekonometria przestrzenna migracji wewnętrznych w gminach Polski
+Version: 1.0.0
+Authors@R: person("Celina", "Brzywczy", role = c("aut", "cre"))
+Description: Kod analizy z pracy licencjackiej: MNK i WMNK z imputacją MICE,
+    modele przestrzenne SAR, SEM, SLX, SDM, SDEM, SAC, GNS oraz regresja
+    geograficznie ważona GWR. Zależności instaluje remotes::install_deps().
+License: MIT + file LICENSE
+Encoding: UTF-8
+Depends: R (>= 4.3)
+Imports:
+    dplyr,
+    GGally,
+    GWmodel,
+    gwrr,
+    lmtest,
+    mice,
+    readxl,
+    sandwich,
+    sf,
+    sp,
+    spatialreg,
+    spdep,
+    spgwr,
+    stargazer,
+    stringr

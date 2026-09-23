@@ -26,6 +26,16 @@ Moja praca licencjacka (Informatyka i Ekonometria, WNE UW, 2026) sprawdza, jak s
 - Model **SDEM** usuwa autokorelację reszt (I = −0,004; p = 0,617) i wykazuje istotne **efekty spillover**. Czynniki przyciągające w gminach sąsiednich są ujemnie powiązane z saldem danej gminy: gminy konkurują o migrantów.
 - **GWR** dopasowuje się lepiej niż MNK. Wszystkie parametry zmieniają się istotnie w przestrzeni (test F(3)). Najwyższe lokalne R² model osiąga dla aglomeracji Warszawy, Poznania, Wrocławia, Łodzi i Krakowa.
 
+## Ocena modelu
+
+- **Forma funkcyjna.** Test RESET odrzuca poprawność specyfikacji MNK, także po dodaniu potęg i interakcji (31 istotnych zmiennych). Pozostałam przy prostszej, interpretowalnej specyfikacji, więc współczynniki MNK trzeba czytać ostrożnie.
+- **Heteroskedastyczność.** WMNK ją ogranicza, ale w SDEM pozostaje (Breusch-Pagan p < 0,001). Błędy standardowe SDEM mogą być niewiarygodne.
+- **Wybór modelu.** Kryteria AIC i log-likelihood wskazują GNS, ale najbardziej rozbudowany model jest podatny na overfitting. SDEM wybrałam na podstawie odpornych testów LM, a obie jego składowe przestrzenne są istotne.
+- **Stabilność parametrów.** Test Chowa (F = 12,01; p < 0,001) pokazuje, że czynniki działają inaczej w gminach miejskich, wiejskich i miejsko-wiejskich. Jeden model dla wszystkich gmin to uproszczenie.
+- **Overfitting GWR.** Optymalne pasmo to 61 gmin, czyli 2–3% próby. Lokalne współczynniki mogą częściowo odzwierciedlać szum. BIC wskazuje na MNK, a nie na GWR.
+- **Braki danych.** 64 brakujące wartości uzupełniłam imputacją MICE. Ceny transakcyjne z Rejestru Cen Nieruchomości odrzuciłam, bo brakowało ok. 600 obserwacji.
+- **Przyczynowość.** Dane przekrojowe za jeden rok pokazują zależności, nie przyczyny. Możliwa jest zależność zwrotna, np. napływ ludności podnosi podaż mieszkań. Ujemny znak dla przychodni sugeruje, że zmienna przybliża inny, nieuwzględniony czynnik.
+
 ## Wykresy
 
 Pojęcia użyte w opisach wyjaśnia [DEFINICJE.md](DEFINICJE.md).
@@ -55,6 +65,14 @@ Pojęcia użyte w opisach wyjaśnia [DEFINICJE.md](DEFINICJE.md).
 | <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/r/r-original.svg" width="18"> | [`04_gwr_mieszany.R`](R/04_gwr_mieszany.R) | mixed GWR z parametrami globalnymi i lokalnymi |
 | <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/python/python-original.svg" width="18"> | [`mnk_testy_zmiennych.py`](python/mnk_testy_zmiennych.py) | przygotowanie i transformacje zmiennych, eliminacja zmiennych, testy MNK |
 | <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/python/python-original.svg" width="18"> | [`odleglosci_km.py`](python/odleglosci_km.py) | centroidy gmin i odległość od najbliższego dużego miasta |
+
+### Uruchomienie
+
+```bash
+uv sync                                  # pakiety Pythona z pyproject.toml
+Rscript -e 'remotes::install_deps()'     # pakiety R z pliku DESCRIPTION
+Rscript R/01_mnk_wmnk_mice.R             # kolejno 01, 02, 03, 04
+```
 
 ## Dane
 
